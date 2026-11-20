@@ -20,4 +20,5 @@ public class Livro
 
     [Range(1, 1000, ErrorMessage = "A quantidade de páginas deve estar entre 1 e 1000.")]
     public int QtdPaginas { get; set; }
+    public List<Emprestimo> Emprestimos { get; set; } = [];
 }

@@ -2,6 +2,7 @@
 
 // Representa o empréstimo de um livro para um usuário.
 // É a ponte entre Livro e Usuario (duas relações 1:N).
+// Os relacionamentos são configurados no AppDbContext (Fluent API).
 public class Emprestimo
 {
     public int Id { get; set; }
