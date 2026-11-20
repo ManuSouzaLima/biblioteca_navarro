@@ -1,0 +1,6 @@
+@biblioteca_navarro_HostAddress = http://localhost:5283
+
+GET {{biblioteca_navarro_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
