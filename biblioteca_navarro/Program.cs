@@ -24,6 +24,7 @@ namespace biblioteca_navarro
             // Repositórios: quando alguém pedir a interface, entregue a implementação com EF.
             // Scoped: um por requisição, como o AppDbContext que eles usam.
             builder.Services.AddScoped<ILivroRepository, LivroRepository>();
+            builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             // Services: quando alguém pedir a interface, entregue o serviço.
             builder.Services.AddScoped<ILivroService, LivroService>();

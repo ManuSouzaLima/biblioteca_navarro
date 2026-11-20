@@ -2,31 +2,63 @@ using biblioteca_navarro.Models;
 
 namespace biblioteca_navarro.Services;
 
-/// Implementação do serviço de livros. A lógica será feita quando o repositório for configurado.
+/// Implementação do serviço de livros. Usa o repositório recebido pelo construtor.
 public class LivroService : ILivroService
 {
-    public Task<IEnumerable<Livro>> ListarTodosAsync()
+    private readonly ILivroRepository _repositorio;
+
+    public LivroService(ILivroRepository repositorio)
     {
-        throw new NotImplementedException();
+        _repositorio = repositorio;
     }
 
-    public Task<Livro?> ObterPorIdAsync(int id)
+    public async Task<IEnumerable<Livro>> ListarTodosAsync()
     {
-        throw new NotImplementedException();
+        return await _repositorio.ListarTodosAsync();
     }
 
-    public Task<Livro> CriarAsync(Livro livro)
+    public async Task<Livro?> ObterPorIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _repositorio.ObterPorIdAsync(id);
     }
 
-    public Task<bool> AtualizarAsync(Livro livro)
+    public async Task<Livro> CriarAsync(Livro livro)
     {
-        throw new NotImplementedException();
+        _repositorio.Adicionar(livro);
+        await _repositorio.SalvarAlteracoesAsync();
+
+        return livro;
     }
 
-    public Task<bool> ExcluirAsync(int id)
+    public async Task<bool> AtualizarAsync(Livro livro)
     {
-        throw new NotImplementedException();
+        // Validação: o livro precisa existir (no código de referência, PUT sem registro retorna NotFound)
+        var existente = await _repositorio.ObterPorIdAsync(livro.Id);
+        if (existente is null)
+        {
+            return false;
+        }
+
+        existente.Titulo = livro.Titulo;
+        existente.Autor = livro.Autor;
+        existente.Isbn = livro.Isbn;
+        existente.QtdPaginas = livro.QtdPaginas;
+
+        await _repositorio.SalvarAlteracoesAsync();
+        return true;
+    }
+
+    public async Task<bool> ExcluirAsync(int id)
+    {
+        // Validação: o livro precisa existir (no código de referência, DELETE sem registro retorna NotFound)
+        var existente = await _repositorio.ObterPorIdAsync(id);
+        if (existente is null)
+        {
+            return false;
+        }
+
+        _repositorio.Remover(existente);
+        await _repositorio.SalvarAlteracoesAsync();
+        return true;
     }
 }

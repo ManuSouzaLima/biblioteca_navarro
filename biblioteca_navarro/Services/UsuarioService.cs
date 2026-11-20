@@ -2,31 +2,63 @@ using biblioteca_navarro.Models;
 
 namespace biblioteca_navarro.Services;
 
-/// Implementação do serviço de usuários. A lógica será feita quando o repositório for configurado.
+/// Implementação do serviço de usuários. Usa o repositório recebido pelo construtor.
 public class UsuarioService : IUsuarioService
 {
-    public Task<IEnumerable<Usuario>> ListarTodosAsync()
+    private readonly IUsuarioRepository _repositorio;
+
+    public UsuarioService(IUsuarioRepository repositorio)
     {
-        throw new NotImplementedException();
+        _repositorio = repositorio;
     }
 
-    public Task<Usuario?> ObterPorIdAsync(int id)
+    public async Task<IEnumerable<Usuario>> ListarTodosAsync()
     {
-        throw new NotImplementedException();
+        return await _repositorio.ListarTodosAsync();
     }
 
-    public Task<Usuario> CriarAsync(Usuario usuario)
+    public async Task<Usuario?> ObterPorIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _repositorio.ObterPorIdAsync(id);
     }
 
-    public Task<bool> AtualizarAsync(Usuario usuario)
+    public async Task<Usuario> CriarAsync(Usuario usuario)
     {
-        throw new NotImplementedException();
+        _repositorio.Adicionar(usuario);
+        await _repositorio.SalvarAlteracoesAsync();
+
+        return usuario;
     }
 
-    public Task<bool> ExcluirAsync(int id)
+    public async Task<bool> AtualizarAsync(Usuario usuario)
     {
-        throw new NotImplementedException();
+        // Validação: o usuário precisa existir (no código de referência, PUT sem registro retorna NotFound)
+        var existente = await _repositorio.ObterPorIdAsync(usuario.Id);
+        if (existente is null)
+        {
+            return false;
+        }
+
+        existente.Nome = usuario.Nome;
+        existente.Ra = usuario.Ra;
+        existente.Telefone = usuario.Telefone;
+        existente.Email = usuario.Email;
+
+        await _repositorio.SalvarAlteracoesAsync();
+        return true;
+    }
+
+    public async Task<bool> ExcluirAsync(int id)
+    {
+        // Validação: o usuário precisa existir (no código de referência, DELETE sem registro retorna NotFound)
+        var existente = await _repositorio.ObterPorIdAsync(id);
+        if (existente is null)
+        {
+            return false;
+        }
+
+        _repositorio.Remover(existente);
+        await _repositorio.SalvarAlteracoesAsync();
+        return true;
     }
 }
