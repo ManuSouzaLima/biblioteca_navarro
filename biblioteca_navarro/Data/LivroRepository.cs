@@ -16,39 +16,39 @@ public class LivroRepository : ILivroRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Livro>> GetAllAsync()
+    public async Task<IEnumerable<Livro>> ListarTodosAsync()
     {
         return await _context.Livros.ToListAsync();
     }
 
-    public async Task<Livro?> GetByIdAsync(int id)
+    public async Task<Livro?> ObterPorIdAsync(int id)
     {
         return await _context.Livros.FindAsync(id);
     }
 
-    public async Task<bool> ExistsByIsbnAsync(string isbn, int? idIgnorado)
+    public async Task<bool> ExisteIsbnAsync(string isbn, int? idIgnorado)
     {
         return await _context.Livros.AnyAsync(l =>
             l.Isbn == isbn &&
             (idIgnorado == null || l.Id != idIgnorado));
     }
 
-    public async Task<bool> HasEmprestimosAsync(int id)
+    public async Task<bool> PossuiEmprestimosAsync(int id)
     {
         return await _context.Emprestimos.AnyAsync(e => e.LivroId == id);
     }
 
-    public void Add(Livro livro)
+    public void Adicionar(Livro livro)
     {
         _context.Livros.Add(livro);
     }
 
-    public void Remove(Livro livro)
+    public void Remover(Livro livro)
     {
         _context.Livros.Remove(livro);
     }
 
-    public async Task SaveChangesAsync()
+    public async Task SalvarAlteracoesAsync()
     {
         await _context.SaveChangesAsync();
     }

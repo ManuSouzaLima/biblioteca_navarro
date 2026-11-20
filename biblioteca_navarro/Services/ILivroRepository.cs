@@ -7,19 +7,19 @@ namespace biblioteca_navarro.Services;
 // Repare: nada aqui fala de banco, SQL ou Entity Framework.
 public interface ILivroRepository
 {
-    Task<IEnumerable<Livro>> GetAllAsync();
-    Task<Livro?> GetByIdAsync(int id);
+    Task<IEnumerable<Livro>> ListarTodosAsync();
+    Task<Livro?> ObterPorIdAsync(int id);
 
     // "Já existe um livro com este ISBN?" (para não cadastrar duplicado)
     // idIgnorado: no update, o próprio livro não conta como duplicado.
-    Task<bool> ExistsByIsbnAsync(string isbn, int? idIgnorado);
+    Task<bool> ExisteIsbnAsync(string isbn, int? idIgnorado);
 
     // "Este livro tem empréstimos?" (para não apagar livro com histórico)
-    Task<bool> HasEmprestimosAsync(int id);
+    Task<bool> PossuiEmprestimosAsync(int id);
 
-    void Add(Livro livro);
-    void Remove(Livro livro);
+    void Adicionar(Livro livro);
+    void Remover(Livro livro);
 
     // Grava de uma vez tudo o que foi adicionado, alterado ou removido
-    Task SaveChangesAsync();
+    Task SalvarAlteracoesAsync();
 }

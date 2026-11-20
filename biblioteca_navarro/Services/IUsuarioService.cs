@@ -5,13 +5,13 @@ namespace biblioteca_navarro.Services;
 /// Contrato das operações de negócio sobre usuários.
 public interface IUsuarioService
 {
-    Task<IEnumerable<Usuario>> GetAllAsync();
+    Task<IEnumerable<Usuario>> ListarTodosAsync();
 
-    Task<Usuario?> GetByIdAsync(int id);
+    Task<Usuario?> ObterPorIdAsync(int id);
 
-    Task<Usuario> CreateAsync(Usuario usuario);
+    Task<Usuario> CriarAsync(Usuario usuario);
 
-    Task<bool> UpdateAsync(Usuario usuario);
+    Task<bool> AtualizarAsync(Usuario usuario);
 
-    Task<bool> DeleteAsync(int id);
+    Task<bool> ExcluirAsync(int id);
 }

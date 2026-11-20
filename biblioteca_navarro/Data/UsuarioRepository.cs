@@ -16,39 +16,39 @@ public class UsuarioRepository : IUsuarioRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Usuario>> GetAllAsync()
+    public async Task<IEnumerable<Usuario>> ListarTodosAsync()
     {
         return await _context.Usuarios.ToListAsync();
     }
 
-    public async Task<Usuario?> GetByIdAsync(int id)
+    public async Task<Usuario?> ObterPorIdAsync(int id)
     {
         return await _context.Usuarios.FindAsync(id);
     }
 
-    public async Task<bool> ExistsByRaAsync(string ra, int? idIgnorado)
+    public async Task<bool> ExisteRaAsync(string ra, int? idIgnorado)
     {
         return await _context.Usuarios.AnyAsync(u =>
             u.Ra == ra &&
             (idIgnorado == null || u.Id != idIgnorado));
     }
 
-    public async Task<bool> HasEmprestimosAsync(int id)
+    public async Task<bool> PossuiEmprestimosAsync(int id)
     {
         return await _context.Emprestimos.AnyAsync(e => e.UsuarioId == id);
     }
 
-    public void Add(Usuario usuario)
+    public void Adicionar(Usuario usuario)
     {
         _context.Usuarios.Add(usuario);
     }
 
-    public void Remove(Usuario usuario)
+    public void Remover(Usuario usuario)
     {
         _context.Usuarios.Remove(usuario);
     }
 
-    public async Task SaveChangesAsync()
+    public async Task SalvarAlteracoesAsync()
     {
         await _context.SaveChangesAsync();
     }

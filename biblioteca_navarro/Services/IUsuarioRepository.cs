@@ -7,19 +7,19 @@ namespace biblioteca_navarro.Services;
 // Repare: nada aqui fala de banco, SQL ou Entity Framework.
 public interface IUsuarioRepository
 {
-    Task<IEnumerable<Usuario>> GetAllAsync();
-    Task<Usuario?> GetByIdAsync(int id);
+    Task<IEnumerable<Usuario>> ListarTodosAsync();
+    Task<Usuario?> ObterPorIdAsync(int id);
 
     // "Já existe um usuário com este RA?" (para não cadastrar duplicado)
     // idIgnorado: no update, o próprio usuário não conta como duplicado.
-    Task<bool> ExistsByRaAsync(string ra, int? idIgnorado);
+    Task<bool> ExisteRaAsync(string ra, int? idIgnorado);
 
     // "Este usuário tem empréstimos?" (para não apagar usuário com histórico)
-    Task<bool> HasEmprestimosAsync(int id);
+    Task<bool> PossuiEmprestimosAsync(int id);
 
-    void Add(Usuario usuario);
-    void Remove(Usuario usuario);
+    void Adicionar(Usuario usuario);
+    void Remover(Usuario usuario);
 
     // Grava de uma vez tudo o que foi adicionado, alterado ou removido
-    Task SaveChangesAsync();
+    Task SalvarAlteracoesAsync();
 }

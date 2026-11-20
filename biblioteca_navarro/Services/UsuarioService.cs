@@ -5,27 +5,27 @@ namespace biblioteca_navarro.Services;
 /// Implementação do serviço de usuários. A lógica será feita quando o repositório for configurado.
 public class UsuarioService : IUsuarioService
 {
-    public Task<IEnumerable<Usuario>> GetAllAsync()
+    public Task<IEnumerable<Usuario>> ListarTodosAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<Usuario?> GetByIdAsync(int id)
+    public Task<Usuario?> ObterPorIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Usuario> CreateAsync(Usuario usuario)
+    public Task<Usuario> CriarAsync(Usuario usuario)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> UpdateAsync(Usuario usuario)
+    public Task<bool> AtualizarAsync(Usuario usuario)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(int id)
+    public Task<bool> ExcluirAsync(int id)
     {
         throw new NotImplementedException();
     }

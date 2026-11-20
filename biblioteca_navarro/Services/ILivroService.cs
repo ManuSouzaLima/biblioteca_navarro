@@ -5,13 +5,13 @@ namespace biblioteca_navarro.Services;
 /// Contrato das operações de negócio sobre livros.
 public interface ILivroService
 {
-    Task<IEnumerable<Livro>> GetAllAsync();
+    Task<IEnumerable<Livro>> ListarTodosAsync();
 
-    Task<Livro?> GetByIdAsync(int id);
+    Task<Livro?> ObterPorIdAsync(int id);
 
-    Task<Livro> CreateAsync(Livro livro);
+    Task<Livro> CriarAsync(Livro livro);
 
-    Task<bool> UpdateAsync(Livro livro);
+    Task<bool> AtualizarAsync(Livro livro);
 
-    Task<bool> DeleteAsync(int id);
+    Task<bool> ExcluirAsync(int id);
 }
