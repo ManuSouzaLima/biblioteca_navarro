@@ -10,16 +10,16 @@ namespace biblioteca_navarro
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Banco SQLite (arquivo biblioteca_navarro.db), configurado no appsettings.json
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("BibliotecaNavarro")
+                    ?? throw new InvalidOperationException("Connection string 'BibliotecaNavarro' não encontrada.")));
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
             //configuração do swagger
             builder.Services.AddSwaggerGen();
-
-            // Registra o AppDbContext e diz que o banco é SQLite,
-            // usando a connection string do appsettings.json
-            builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Repositórios: quando alguém pedir a interface, entregue a implementação com EF.
             // Scoped: um por requisição, como o AppDbContext que eles usam.
