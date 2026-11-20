@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace biblioteca_navarro.Migrations
+namespace biblioteca_navarro.Migrations;
 
     public partial class Inicial : Migration
     {
@@ -92,4 +92,4 @@ namespace biblioteca_navarro.Migrations
                 name: "Usuarios");
         }
     }
-}
+
