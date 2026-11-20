@@ -4,11 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 #nullable disable
 
 namespace biblioteca_navarro.Migrations
-{
-    /// <inheritdoc />
+
     public partial class Inicial : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
