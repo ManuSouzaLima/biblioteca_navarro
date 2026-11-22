@@ -25,10 +25,12 @@ namespace biblioteca_navarro
             // Scoped: um por requisição, como o AppDbContext que eles usam.
             builder.Services.AddScoped<ILivroRepository, LivroRepository>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
 
             // Services: quando alguém pedir a interface, entregue o serviço.
             builder.Services.AddScoped<ILivroService, LivroService>();
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+            builder.Services.AddScoped<IEmprestimoService, EmprestimoService>();
 
             var app = builder.Build();
 
