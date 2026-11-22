@@ -18,12 +18,18 @@ public class EmprestimoRepository : IEmprestimoRepository
 
     public async Task<IEnumerable<Emprestimo>> ListarTodosAsync()
     {
-        return await _context.Emprestimos.ToListAsync();
+        return await _context.Emprestimos
+            .Include(e => e.Usuario)
+            .Include(e => e.Livro)
+            .ToListAsync();
     }
 
     public async Task<Emprestimo?> ObterPorIdAsync(int id)
     {
-        return await _context.Emprestimos.FindAsync(id);
+        return await _context.Emprestimos
+            .Include(e => e.Usuario)
+            .Include(e => e.Livro)
+            .FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public void Adicionar(Emprestimo emprestimo)

@@ -6,10 +6,17 @@ namespace biblioteca_navarro.Services;
 public class EmprestimoService : IEmprestimoService
 {
     private readonly IEmprestimoRepository _repositorio;
+    private readonly IUsuarioRepository _usuarioRepositorio;
+    private readonly ILivroRepository _livroRepositorio;
 
-    public EmprestimoService(IEmprestimoRepository repositorio)
+    public EmprestimoService(
+        IEmprestimoRepository repositorio,
+        IUsuarioRepository usuarioRepositorio,
+        ILivroRepository livroRepositorio)
     {
         _repositorio = repositorio;
+        _usuarioRepositorio = usuarioRepositorio;
+        _livroRepositorio = livroRepositorio;
     }
 
     public async Task<IEnumerable<Emprestimo>> ListarTodosAsync()
@@ -41,7 +48,7 @@ public class EmprestimoService : IEmprestimoService
 
         existente.UsuarioId = emprestimo.UsuarioId;
         existente.LivroId = emprestimo.LivroId;
-        existente.DataEmprestimo = emprestimo.DataEmprestimo;
+        // A data do empréstimo é mantida: ela é definida na criação e não vem no PUT.
 
         await _repositorio.SalvarAlteracoesAsync();
         return true;
@@ -59,5 +66,20 @@ public class EmprestimoService : IEmprestimoService
         _repositorio.Remover(existente);
         await _repositorio.SalvarAlteracoesAsync();
         return true;
+    }
+
+    public async Task<string?> ValidarReferenciasAsync(int usuarioId, int livroId)
+    {
+        if (await _usuarioRepositorio.ObterPorIdAsync(usuarioId) is null)
+        {
+            return $"Usuário com Id {usuarioId} não encontrado.";
+        }
+
+        if (await _livroRepositorio.ObterPorIdAsync(livroId) is null)
+        {
+            return $"Livro com Id {livroId} não encontrado.";
+        }
+
+        return null;
     }
 }

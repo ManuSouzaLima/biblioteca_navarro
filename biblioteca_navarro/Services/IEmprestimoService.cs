@@ -14,4 +14,7 @@ public interface IEmprestimoService
     Task<bool> AtualizarAsync(Emprestimo emprestimo);
 
     Task<bool> ExcluirAsync(int id);
+
+    // Retorna uma mensagem de erro se o usuário ou o livro não existir; null se estiver tudo certo.
+    Task<string?> ValidarReferenciasAsync(int usuarioId, int livroId);
 }
